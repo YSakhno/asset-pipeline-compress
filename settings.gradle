@@ -1,0 +1,1 @@
+include "asset-pipeline-compress", "brotli-asset-pipeline-compress"

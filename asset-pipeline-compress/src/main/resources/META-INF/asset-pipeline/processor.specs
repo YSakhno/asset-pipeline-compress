@@ -1,0 +1,1 @@
+io.github.ysakhno.assetpipeline.BogusCompressProcessor=asset.pipeline.HtmlAssetFile,asset.pipeline.JsAssetFile,asset.pipeline.JsEs6AssetFile,asset.pipeline.CssAssetFile

@@ -1,0 +1,23 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+        dependencies {
+    }
+}
+
+subprojects {
+    version = "1.0-SNAPSHOT"
+}
+
+apply plugin: "groovy"
+apply plugin: "eclipse"
+apply plugin: "idea"
+
+group = "io.github.ysakhno"
+
+repositories {
+    jcenter()
+    mavenCentral()
+}

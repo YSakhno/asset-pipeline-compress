@@ -1,0 +1,73 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+    }
+}
+
+apply plugin: "eclipse"
+apply plugin: "idea"
+apply plugin: "groovy"
+apply plugin: "maven"
+//apply plugin: "maven-publish"
+
+group = "io.github.ysakhno"
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+//version = "1.0-SNAPSHOT"
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+configurations {
+    provided
+    doc.extendsFrom(runtime)
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+    compileOnly "com.bertramlabs.plugins:asset-pipeline-core:2.5.0"
+    compile "io.github.lukehutch:fast-classpath-scanner:2.+"
+}
+
+groovydoc {
+    docTitle "Asset Pipeline Compress"
+    windowTitle "Asset Pipeline Compress API Doc"
+    groovyClasspath = configurations.doc
+    classpath = configurations.runtime
+    // Links to external Javadoc, currently only the J2SE links are working properly
+    link("http://download.oracle.com/javase/8/docs/api/", "java.", "org.xml", "javax.", "org.xml.")
+    link("http://groovy.codehaus.org/api/",  "groovy.", "org.codehaus.groovy.")
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri("../../repo"))
+        }
+    }
+}
+
+eclipse {
+    classpath {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+task sourcesJar(type: Jar) {
+    classifier = "sources"
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = "javadoc"
+    from "build/docs/javadoc"
+}
